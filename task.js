@@ -3,7 +3,7 @@ const pollAnswers = document.getElementById('poll__answers'); // обертка 
 const pollAnswer = document.createElement('button');
 pollAnswer.classList.add('poll__answer');
 
-let xhr = new XMLHttpRequest();
+const xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://netology-slow-rest.herokuapp.com/poll.php');
 xhr.send();
 
@@ -34,13 +34,12 @@ xhr.onload = function() {
         answer.addEventListener('click', () => {
             alert('Спасибо, ваш голос засчитан!');
             
-            let newXHR = new XMLHttpRequest();
-            newXHR.open('POST', 'https://netology-slow-rest.herokuapp.com/poll.php');
-            newXHR.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            newXHR.send(`vote=${index}&answer=${responseNumber}`);
+            xhr.open('POST', 'https://netology-slow-rest.herokuapp.com/poll.php');
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send(`vote=${index}&answer=${responseNumber}`);
 
-            newXHR.onload = function() {
-                console.log(JSON.parse(newXHR.response));
+            xhr.onload = function() {
+                console.log(JSON.parse(xhr.response));
             }
         })
     })
