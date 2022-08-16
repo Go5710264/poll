@@ -16,6 +16,7 @@ function serverRequest(arg) {
         xhr.open('POST', 'https://netology-slow-rest.herokuapp.com/poll.php');
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.send(`vote=${index}&answer=${respNumber}`);
+        xhr.removeEventListener('load', questionLoading); // удаление отслеживания загрузки файлов с сервера
 
         xhr.onload = function() {
             console.log(JSON.parse(xhr.response));
