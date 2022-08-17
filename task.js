@@ -19,7 +19,24 @@ function serverRequest(arg) {
         xhr.removeEventListener('load', questionLoading); // удаление отслеживания загрузки файлов с сервера
 
         xhr.onload = function() {
-            console.log(JSON.parse(xhr.response));
+            let statistics = JSON.parse(xhr.response);
+            console.log(statistics)
+            let numberVoters = 0; // общее количество проголосовавших
+
+            statistics.stat.forEach((element) => {
+                numberVoters = numberVoters + element.votes;
+            })
+
+            statistics.stat.forEach((element) => { // статистика каждого ответа
+                let answerName = document.createElement('div'); // элемент названия ответа
+                answerName.textContent = `${element.answer}: `; // добавление имени в элемент
+                let percent = document.createElement('b'); // элемент процента
+                percent.textContent = `${(element.votes * 100 / numberVoters).toFixed(2)}%`; // добавление имени в элемент
+                answerName.appendChild(percent);
+                pollAnswers.appendChild(answerName); // добавление элемента в ответы
+            })
+
+            Array.from(document.getElementsByTagName('button')).forEach((element) => element.remove()); // удаление кнопок
         }
     }
 }
